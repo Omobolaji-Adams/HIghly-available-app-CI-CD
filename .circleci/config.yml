@@ -263,7 +263,7 @@ jobs:
 #               # your code here
 #             fi
 workflows:
-  default:it
+  default:
     jobs:
       - build-frontend
       - build-backend
