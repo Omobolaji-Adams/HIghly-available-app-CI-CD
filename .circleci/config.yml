@@ -108,44 +108,20 @@ jobs:
             npm install
             npm audit fix --audit-level=critical --force
             npm audit --audit-level=critical           
-      
-  
 
-  # scan-backend:
-  #   executor: node
-  #   steps:
-  #     - checkout
-  #     - restore_cache:
-  #         keys:
-  #           - backend-build
-  #     - run:
-  #         name: Check Backend against security vulnerabilities
-  #         working_directory: ./backend
-  #         command: |
-  #           npm install
-  #           npm audit fix --audit-level=critical --force
   scan-backend:
     docker:
       - image: circleci/node:13.8.0
     steps:
       - checkout
-      - restore_cache:
-          keys: [backend-build]
+      # - restore_cache:
+      #     keys: [backend-build]
       - run:
           name: scan Back-end
           command: |
             cd backend
             npm install
             npm audit fix --audit-level=critical --force
-            # npm install 
-            # npm i --save-dev standard-version
-            # npm install --save-dev webpack@5.73.0
-            # npm update mkdirp --depth 2
-            # npm update kind-of --depth 10
-            # npm update path-parse --depth 
-            # npm audit fix --audit-level=critical
-            # npm audit fix --audit-level=critical --force
-            # npm audit --audit-level=critical
 #   deploy-infrastructure:
 #     docker:
 #       # Docker image here that supports AWS CLI
