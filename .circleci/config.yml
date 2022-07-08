@@ -180,7 +180,6 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            python3 -m pip install --user ansible
             pip install --user ansible
             apk add --update tar
             apk add --update gzip
@@ -189,7 +188,8 @@ jobs:
           command: |
             echo smada
             pip list | grep ansible
-            cd .circleci/ansible
+            cat /project/.circleci/ansible/configure-server.yml
+            cd /project/.circleci/ansible
             ansible-playbook -i inventory.txt configure-server.yml
             
       # Here's where you will add some code to rollback on failure      
