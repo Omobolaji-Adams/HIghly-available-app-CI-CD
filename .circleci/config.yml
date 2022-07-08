@@ -133,7 +133,6 @@ jobs:
       - run:
           name: Ensure back-end infrastructure exists
           command: |
-            echo test
             aws cloudformation deploy \
               --template-file .circleci/files/backend.yml \
               --tags project=udapeople \
@@ -157,17 +156,17 @@ jobs:
             --query 'Reservations[*].Instances[*].PublicIpAddress' \
             --filters "Name=tag:Project,Values=udacity" \
             --output text >> inventory.txt
+            echo inventory.txt
             
       - persist_to_workspace:
           root: ~/
           paths:
             - project/.circleci/ansible/inventory.txt
 
-      # - destroy-environment:
-      #     id: 'udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}'
-      # - destroy-environment:
-      #     id: udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}
-      # Here's where you will add some code to rollback on failure      
+      - destroy-environment:
+          id: 'udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}'
+      - destroy-environment:
+          id: udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}    
 
 #   configure-infrastructure:
 #     docker:
