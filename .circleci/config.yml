@@ -191,11 +191,13 @@ jobs:
             pwd
             ls -a
             cat ~/project/.circleci/ansible/inventory.txt
-            cat ansible/configure-server.yml
-            cat /project/.circleci/ansible/configure-server.yml
-            cd /project/.circleci/ansible
+            cat ~/project/.circleci/ansible/configure-server.yml
+            cd ~/project/.circleci/ansible
             ansible-playbook -i inventory.txt configure-server.yml
-            
+      - destroy-environment:
+          id: 'udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}'
+      - destroy-environment:
+          id: udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}         
       # Here's where you will add some code to rollback on failure      
 
 #   run-migrations:
