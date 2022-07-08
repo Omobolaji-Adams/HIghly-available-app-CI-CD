@@ -188,6 +188,8 @@ jobs:
           command: |
             echo smada
             pip list | grep ansible
+            cat /project/.circleci/ansible/inventory.txt
+            cat .circleci/ansible/configure-server.yml
             cat /project/.circleci/ansible/configure-server.yml
             cd /project/.circleci/ansible
             ansible-playbook -i inventory.txt configure-server.yml
