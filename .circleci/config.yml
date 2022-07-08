@@ -181,13 +181,14 @@ jobs:
           name: Install dependencies
           command: |
             apk add --update ansible tar
-            apk add --update gzip awscli
+            apk add --update gzip
       - run:
           name: Configure server
           command: |
             echo smada
-            # Your code here
-            exit 1
+            cd .circleci/ansible
+            ansible-playbook -i inventory.txt configure-server.yml
+            
       # Here's where you will add some code to rollback on failure      
 
 #   run-migrations:
