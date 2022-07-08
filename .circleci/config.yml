@@ -161,7 +161,7 @@ jobs:
             cat .circleci/ansible/inventory.txt
             ls -a project/.circleci/ansible/inventory.txt
             cd /
-            ls -a project/.circleci/ansible/inventory.txt
+            ls -a
 
             
       - persist_to_workspace:
