@@ -154,7 +154,7 @@ jobs:
           command: |
             aws ec2 describe-instances \
             --query 'Reservations[*].Instances[*].PublicIpAddress' \
-            --filters "Name=tag:Project,Values=udapeople" \
+            --filters "Name=tag:project,Values=udapeople" \
             --output text >> inventory.txt
             cat inventory.txt
         
