@@ -158,8 +158,11 @@ jobs:
             --output text >> inventory.txt
             cat inventory.txt
             ls -a
+            cat .circleci/ansible/inventory.txt
             ls -a project/.circleci/ansible/inventory.txt
-        
+            cd /
+            ls -a project/.circleci/ansible/inventory.txt
+
             
       - persist_to_workspace:
           root: ~/
