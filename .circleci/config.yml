@@ -170,7 +170,8 @@ jobs:
 
   configure-infrastructure:
     docker:
-      - image: python:3.9.12-alpine3.15
+      - image: python:3.7-alpine3.11
+    steps:
       - checkout
       - add_ssh_keys:
           fingerprints: ["1b:80:7c:08:70:d7:13:3e:e5:eb:5b:db:b5:bb:d5:47"]
