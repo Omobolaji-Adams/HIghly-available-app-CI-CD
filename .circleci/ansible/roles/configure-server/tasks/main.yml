@@ -9,10 +9,10 @@
   apt:
     upgrade: yes
 
-- name: "remove dependencies that are not required"
-  become: true
-  apt:
-    autoremove: yes
+# - name: "remove dependencies that are not required"
+#   become: true
+#   apt:
+#     autoremove: yes
 
 - name: "install dependencies."
   become: true
