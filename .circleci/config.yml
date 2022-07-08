@@ -157,6 +157,8 @@ jobs:
             --filters "Name=tag:project,Values=udapeople" \
             --output text >> inventory.txt
             cat inventory.txt
+            ls -a
+            ls -a project/.circleci/ansible/inventory.txt
         
             
       - persist_to_workspace:
