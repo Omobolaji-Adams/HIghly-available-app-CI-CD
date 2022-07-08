@@ -159,10 +159,10 @@ jobs:
             cat inventory.txt
             ls -a
             cat .circleci/ansible/inventory.txt
-            cd /
-            ls -a
+            ls -a project/.circleci/ansible
             cd 
-            ls -a project/.circleci/ansible/inventory.txt
+            ls -a
+            ls -a project/.circleci/ansible
             
 
 
