@@ -157,11 +157,15 @@ jobs:
             --filters "Name=tag:project,Values=udapeople" \
             --output text >> inventory.txt
             cat inventory.txt
+            pwd
             ls -a
             cat .circleci/ansible/inventory.txt
             cd 
+            pwd
             ls -a
-            ls -a project/.circleci/ansible
+            ls -a project/.circleci
+            ls -a project
+
             
 
 
