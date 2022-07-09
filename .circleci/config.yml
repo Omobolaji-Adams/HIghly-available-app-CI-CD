@@ -179,16 +179,16 @@ jobs:
           name: Install tar utility
           command: |
             yum install -y tar gzip
-            yum install -y python3.8
-            python3.8 -m pip -V
-            python3.8 -m pip install --user ansible
+            yum install -y python3.7
+            python3.7 -m pip -V
+            python3.7 -m pip install --user ansible
             pip install --user ansible
       - attach_workspace:
           at: ~/
       - run:
           name: Install dependencies
           command: |
-            python3.8 -m pip install --user ansible
+            python3.7 -m pip install --user ansible
             pwd
             ls -a
       - run:
