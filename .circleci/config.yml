@@ -182,9 +182,9 @@ jobs:
             yum install -y python3.7
             curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
             python3.7 get-pip.py --user
-            python3.7 -m pip -V
+            python3.7 -m pip install --user
             python3.7 -m pip install --user ansible
-            pip install --user ansible
+           
       - attach_workspace:
           at: ~/
       - run:
@@ -203,6 +203,7 @@ jobs:
             cat ~/project/.circleci/ansible/inventory.txt
             cat ~/project/.circleci/ansible/configure-server.yml
             cd ~/project/.circleci/ansible
+            python3.7 -m pip install --user ansible
             ansible-playbook -i inventory.txt configure-server.yml
       - destroy-environment:
           id: 'udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}'
