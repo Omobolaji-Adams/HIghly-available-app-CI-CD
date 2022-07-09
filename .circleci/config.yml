@@ -192,7 +192,7 @@ jobs:
           name: Configure server
           command: |
             echo smada
-            pip list | grep ansible
+            ansible --version
             pwd
             ls -a
             cat ~/project/.circleci/ansible/inventory.txt
