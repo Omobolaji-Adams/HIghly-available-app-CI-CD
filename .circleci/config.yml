@@ -190,7 +190,6 @@ jobs:
           name: Install dependencies
           command: |
             python3.7 -m pip install --user ansible
-            export PATH="/usr/local/bin:$PATH"
             pwd
             ls -a
       - run:
@@ -203,6 +202,9 @@ jobs:
             cat ~/project/.circleci/ansible/configure-server.yml
             cd ~/project/.circleci/ansible
             python3.7 -m pip install --user ansible
+            cp inventory.txt /root/.local/lib/python3.7
+            cp configure-server.yml /root/.local/lib/python3.7
+            cd /root/.local/lib/python3.7
             ansible-playbook -i inventory.txt configure-server.yml
       - destroy-environment:
           id: 'udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}'
