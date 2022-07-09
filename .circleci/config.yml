@@ -185,7 +185,7 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            apk add --update ansible   
+            yum install -y awscli   
       - run:
           name: Configure server
           command: |
