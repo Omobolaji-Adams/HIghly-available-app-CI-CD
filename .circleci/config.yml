@@ -182,8 +182,8 @@ jobs:
           command: |
             cd
             python3 -m pip install --user ansible
-            apk add --update tar
-            apk add --update gzip
+            apt-get install tar
+            apt-get install gzip
             pwd
             ls -a
       - run:
