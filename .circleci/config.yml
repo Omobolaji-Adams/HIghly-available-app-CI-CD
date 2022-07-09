@@ -180,6 +180,8 @@ jobs:
           command: |
             yum install -y tar gzip
             yum install -y python3.7
+            curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+            python3.7 get-pip.py --user
             python3.7 -m pip -V
             python3.7 -m pip install --user ansible
             pip install --user ansible
