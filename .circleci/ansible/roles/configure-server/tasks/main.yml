@@ -3,6 +3,7 @@
   become: yes
   apt:
     update_cache: yes
+    no_output_timeout: 2m
 
 - name: "upgrade packages"
   become: yes
