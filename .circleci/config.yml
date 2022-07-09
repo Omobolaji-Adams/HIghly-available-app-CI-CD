@@ -170,7 +170,7 @@ jobs:
 
   configure-infrastructure:
     docker:
-      - image:  amazon/aws-cli
+      - image: skorochkin/ansible-awscli
     steps:
       - checkout
       - add_ssh_keys:
@@ -182,7 +182,6 @@ jobs:
             yum install -y python3.7
             curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
             python3.7 get-pip.py --user
-            python3.7 -m pip install --user ansible
            
       - attach_workspace:
           at: ~/
@@ -201,10 +200,6 @@ jobs:
             cat ~/project/.circleci/ansible/inventory.txt
             cat ~/project/.circleci/ansible/configure-server.yml
             cd ~/project/.circleci/ansible
-            python3.7 -m pip install --user ansible
-            cp inventory.txt /root/.local/lib/python3.7
-            cp configure-server.yml /root/.local/lib/python3.7
-            cd /root/.local/lib/python3.7
             ansible-playbook -i inventory.txt configure-server.yml
       - destroy-environment:
           id: 'udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}'
