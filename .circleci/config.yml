@@ -180,7 +180,7 @@ jobs:
           command: |
             yum install -y tar gzip
             yum install -y python3
-            yum install ansible
+            pip install --user ansible
       - attach_workspace:
           at: ~/
       - run:
