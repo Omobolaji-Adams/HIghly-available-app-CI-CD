@@ -179,7 +179,7 @@ jobs:
           name: Install tar utility
           command: |
             yum install -y tar gzip
-            apt-get install python3
+            yum install -y python3
       - attach_workspace:
           at: ~/
       - run:
