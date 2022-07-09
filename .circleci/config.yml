@@ -190,6 +190,7 @@ jobs:
           name: Install dependencies
           command: |
             python3.7 -m pip install --user ansible
+            export PATH="/usr/local/bin:$PATH"
             pwd
             ls -a
       - run:
