@@ -170,7 +170,7 @@ jobs:
 
   configure-infrastructure:
     docker:
-      - image: python:3.7-alpine3.11
+      - image: python:3.10-alpine3.16
     steps:
       - checkout
       - add_ssh_keys:
@@ -181,7 +181,6 @@ jobs:
             apk add --update curl
             apk add --update tar 
             apk add --update gzip
-            apk update
             apk add zip
             apk add unzip
             curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
