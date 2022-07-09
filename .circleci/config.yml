@@ -179,12 +179,12 @@ jobs:
           name: Install tar utility
           command: |
             yum install -y tar gzip
+            apt-get install python3
       - attach_workspace:
           at: ~/
       - run:
           name: Install dependencies
           command: |
-            cd
             python3 -m pip install --user ansible
             pwd
             ls -a
