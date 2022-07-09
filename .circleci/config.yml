@@ -175,6 +175,10 @@ jobs:
       - checkout
       - add_ssh_keys:
           fingerprints: ["1b:80:7c:08:70:d7:13:3e:e5:eb:5b:db:b5:bb:d5:47"]
+      - run:
+          name: Install tar utility
+          command: |
+            yum install -y tar gzip
       - attach_workspace:
           at: ~/
       - run:
@@ -182,8 +186,6 @@ jobs:
           command: |
             cd
             python3 -m pip install --user ansible
-            apt-get install tar
-            apt-get install gzip
             pwd
             ls -a
       - run:
