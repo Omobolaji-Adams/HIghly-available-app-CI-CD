@@ -180,13 +180,6 @@ jobs:
       - checkout
       - add_ssh_keys:
           fingerprints: ["1b:80:7c:08:70:d7:13:3e:e5:eb:5b:db:b5:bb:d5:47"]
-      - run:
-          name: Install tar utility
-          command: |
-            apt-get install -y python3.7
-            curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
-            python3.7 get-pip.py --user
-
       - restore_cache:
           keys: [trt]   
       # - attach_workspace:
@@ -194,7 +187,7 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            python3.7 -m pip install --user ansible
+            python3 -m pip install --user ansible
             pwd
             ls -a
       - run:
