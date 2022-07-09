@@ -1,14 +1,14 @@
 ---
-- name: "update apt packages"
-  become: yes
-  apt:
-    update_cache: yes
-    no_output_timeout: 2m
+# - name: "update apt packages"
+#   become: yes
+#   apt:
+#     update_cache: yes
+#     no_output_timeout: 2m
 
-- name: "upgrade packages"
-  become: yes
-  apt:
-    upgrade: yes
+# - name: "upgrade packages"
+#   become: yes
+#   apt:
+#     upgrade: yes
 
 - name: "remove dependencies that are not required"
   become: true
