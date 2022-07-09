@@ -196,7 +196,6 @@ jobs:
           name: Configure server
           command: |
             echo smada
-            ansible --version
             pwd
             ls -a
             cat ~/project/.circleci/ansible/inventory.txt
