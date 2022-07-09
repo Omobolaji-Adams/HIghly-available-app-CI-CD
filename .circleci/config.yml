@@ -183,7 +183,6 @@ jobs:
             python3 -m pip install --user ansible
             apk add --update tar
             apk add --update gzip
-            cd
             pwd
             ls -a
       - run:
