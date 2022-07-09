@@ -113,8 +113,7 @@ jobs:
       - image: circleci/node:13.8.0
     steps:
       - checkout
-      - restore_cache:
-          keys: [backend-build]
+      .circleci/ansible/inventory.txt
       - run:
           name: scan Back-end
           command: |
@@ -157,11 +156,16 @@ jobs:
             --filters "Name=tag:project,Values=udapeople" \
             --output text >> .circleci/ansible/inventory.txt
             cat .circleci/ansible/inventory.txt
-    
-      - persist_to_workspace:
-          root: ~/
-          paths:
-            - project/.circleci/ansible/inventory.txt
+      
+      
+      - save_cache:
+          paths: [.circleci/ansible/inventory.txt]
+          key: trt
+          
+      # - persist_to_workspace:
+      #     root: ~/
+      #     paths:
+      #       - project/.circleci/ansible/inventory.txt
 
       - destroy-environment:
           id: 'udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}'
@@ -178,13 +182,14 @@ jobs:
       - run:
           name: Install tar utility
           command: |
-            yum install -y tar gzip
-            yum install -y python3.7
+            apt-get install -y python3.7
             curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
             python3.7 get-pip.py --user
-           
-      - attach_workspace:
-          at: ~/
+
+      - restore_cache:
+          keys: [trt]   
+      # - attach_workspace:
+      #     at: ~/
       - run:
           name: Install dependencies
           command: |
