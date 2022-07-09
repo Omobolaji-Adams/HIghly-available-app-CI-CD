@@ -157,16 +157,11 @@ jobs:
             --filters "Name=tag:project,Values=udapeople" \
             --output text >> .circleci/ansible/inventory.txt
             cat .circleci/ansible/inventory.txt
-      
-      
-      - save_cache:
-          paths: [.circleci/ansible/inventory.txt]
-          key: trt
-          
-      # - persist_to_workspace:
-      #     root: ~/
-      #     paths:
-      #       - project/.circleci/ansible/inventory.txt
+    
+      - persist_to_workspace:
+          root: ~/project
+          paths:
+            - .circleci/ansible/inventory.txt
 
       - destroy-environment:
           id: 'udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}'
@@ -175,28 +170,33 @@ jobs:
 
   configure-infrastructure:
     docker:
-      - image: skorochkin/ansible-awscli
+      - image: python:3.7-alpine3.11
     steps:
       - checkout
       - add_ssh_keys:
           fingerprints: ["1b:80:7c:08:70:d7:13:3e:e5:eb:5b:db:b5:bb:d5:47"]
-      - restore_cache:
-          keys: [trt]   
-      # - attach_workspace:
-      #     at: ~/
+      - run:
+          name: Install tar utility
+          command: |
+            yum install -y tar gzip
+            dnf install zip
+            dnf install unzip
+            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+            unzip awscliv2.zip
+            which aws
+            ls -l /usr/local/bin/aws
+            sudo ./aws/install
+                
+      - attach_workspace:
+          at: ~/project
       - run:
           name: Install dependencies
           command: |
-            pwd
-            ls -a
+            apk add --update ansible   
       - run:
           name: Configure server
           command: |
-            echo smada
-            pwd
-            ls -a
             cat ~/project/.circleci/ansible/inventory.txt
-            cat ~/project/.circleci/ansible/configure-server.yml
             cd ~/project/.circleci/ansible
             ansible-playbook -i inventory.txt configure-server.yml
       - destroy-environment:
