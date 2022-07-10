@@ -185,7 +185,7 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            yum update
+          
             yum install -y awscli
             yum install -y epel-release
             yum install -y openssh-client
