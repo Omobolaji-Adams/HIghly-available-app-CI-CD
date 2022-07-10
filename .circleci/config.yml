@@ -170,7 +170,7 @@ jobs:
 
   configure-infrastructure:
     docker:
-      - image: geerlingguy/docker-centos7-ansible
+      - image: geerlingguy/docker-centos8-ansible:latest
     steps:
       - checkout
       - add_ssh_keys:
