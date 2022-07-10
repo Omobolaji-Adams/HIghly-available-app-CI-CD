@@ -186,8 +186,7 @@ jobs:
           name: Install dependencies
           command: |
             yum install -y awscli
-            yum install epel-release
-            yum install -y openssh-client
+            yum install ansible
                
       - run:
           name: Configure server
