@@ -174,7 +174,7 @@ jobs:
     steps:
       - checkout
       - add_ssh_keys:
-          fingerprints: ["2f:83:f0:60:cb:a4:fe:2a:e9:f6:8d:77:4f:02:03:09"]
+          fingerprints: ["1b:80:7c:08:70:d7:13:3e:e5:eb:5b:db:b5:bb:d5:47"]
       - run:
           name: Install tar utility
           command: |
