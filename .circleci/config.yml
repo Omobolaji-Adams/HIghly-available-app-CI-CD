@@ -188,7 +188,8 @@ jobs:
             yum update
             yum install -y awscli
             yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
-            yum install ansible
+            yum install -y ansible
+            
             
                
       - run:
