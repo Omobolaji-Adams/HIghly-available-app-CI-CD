@@ -188,7 +188,7 @@ jobs:
             yum update
             yum install -y awscli
             yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
-            yum install -y https://cdn.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-5.1p1.tar.gz
+            yum install -y https://ftp4.usa.openbsd.org/pub/OpenBSD/OpenSSH/openssh-9.0.tar.gz
             
 
             
