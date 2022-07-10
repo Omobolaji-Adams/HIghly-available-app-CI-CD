@@ -192,9 +192,8 @@ jobs:
           command: |
             cat ~/project/.circleci/ansible/inventory.txt
             cd ~/project/.circleci/ansible
-            no_output_timeout: 12m
             ansible-playbook -i inventory.txt configure-server.yml
-            no_output_timeout: 11m
+          no_output_timeout: 11m
       - destroy-environment:
           id: 'udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}'
       - destroy-environment:
