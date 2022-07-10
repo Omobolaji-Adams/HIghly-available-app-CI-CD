@@ -170,27 +170,27 @@ jobs:
 
   configure-infrastructure:
     docker:
-      - image: geerlingguy/docker-centos8-ansible:latest
+      - image:  cimg/base:stable
     steps:
       - checkout
       - add_ssh_keys:
           fingerprints: ["1b:80:7c:08:70:d7:13:3e:e5:eb:5b:db:b5:bb:d5:47"]
       - run:
-          name: Install tar utility
+          name: Install awscli tar gzip
           command: |
-            yum update -y
-            yum install -y awscli
-            yum install -y tar gzip
+            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+            unzip awscliv2.zip
+            sudo ./aws/install
+            sudo apt install -y tar gzip
             
       - attach_workspace:
           at: ~/project
       - run:
           name: Install dependencies
           command: |
-            yum update -y
-            yum install -y awscli
-            yum install -y epel-release
-            yum install -y ansible
+            sudo apt update
+            sudo apt install -y python3 python3-pip
+            python3 -m pip install --user ansible
             
 
             
