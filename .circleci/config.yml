@@ -186,10 +186,13 @@ jobs:
           name: Install dependencies
           command: |
             yum install -y awscli
+            yum install -y openssh-client
                
       - run:
           name: Configure server
           command: |
+            ansible all -m ping -vvv
+            
             cat ~/project/.circleci/ansible/inventory.txt
             cd ~/project/.circleci/ansible
             ansible-playbook -i inventory.txt configure-server.yml
