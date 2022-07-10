@@ -170,7 +170,7 @@ jobs:
 
   configure-infrastructure:
     docker:
-      - image: centos7
+      - image: centos
     steps:
       - checkout
       - add_ssh_keys:
