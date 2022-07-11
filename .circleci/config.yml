@@ -227,7 +227,7 @@ jobs:
             then
              curl https://kvdb.io/GTEpHpRzixPUfazFwYdWhC/migration_${CIRCLE_WORKFLOW_ID:0:7}  -d '1'
             fi
-       - revert-migrations
+      - revert-migrations
     
      
   deploy-frontend:
