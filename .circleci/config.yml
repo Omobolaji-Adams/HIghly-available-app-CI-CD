@@ -242,8 +242,9 @@ jobs:
             curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
             unzip awscliv2.zip
             sudo ./aws/install
-            sudo apt install npm nodejs
-            sudo apt install -y python3 python3-pip
+            sudo apt-get install nodejs
+            sudo apt-get install npm
+            sudo apt-get install -y python3 python3-pip
             python3 -m pip install --user ansible
       - attach_workspace:
           at: ~/project
