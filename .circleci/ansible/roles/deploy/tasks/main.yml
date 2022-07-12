@@ -1,38 +1,7 @@
----
-# - name: "copy artifact into the server"
-#   become: true
-#   copy:
-#     src: artifact.tar.gz
-#     dest: ~/
-
-# - name: extract zipped artifact and install dependancies
-#   become: true
-#   shell: |
-#     tar -xvzf ~/artifact.tar.gz
-# - name: Extract artifact
-#   become: true  
-#   unarchive:
-#     src: files/artifact.tar.gz
-#     dest: /home/ubuntu
-
-# - name: "start server"
-#   become: true
-#   shell: |
-#     cd /home/ubuntu
-#     npm install
-#     pm2 stop default
-#     sudo pm2 start npm -- start
-- name: "show remote environment"
+--- 
+  - name: "show remote environment"
     shell: env
 
-  # - name: install rsync on the ansible controller
-  #   become: yes
-  #   connection: local
-  #   package:
-  #     name: rsync
-  #     state: present
-  
----
   - name: "copy backend binaries"
     become: yes
     synchronize:

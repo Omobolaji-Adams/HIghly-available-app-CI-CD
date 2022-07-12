@@ -181,7 +181,7 @@ jobs:
     steps:
       - checkout
       - add_ssh_keys:
-          fingerprints: ["d2:60:d7:86:c3:b2:d3:39:6b:2b:2b:1a:d8:84:78:62"]
+          fingerprints: ["8a:07:e0:da:c8:a0:e0:82:0c:63:86:a2:9f:6c:ab:01"]
       - run:
           name: Install awscli tar gzip
           command: |
@@ -278,7 +278,7 @@ jobs:
     steps:
       - checkout
       - add_ssh_keys:
-          fingerprints: ["d2:60:d7:86:c3:b2:d3:39:6b:2b:2b:1a:d8:84:78:62"]
+          fingerprints: ["8a:07:e0:da:c8:a0:e0:82:0c:63:86:a2:9f:6c:ab:01"]
       - attach_workspace:
           at: ~/project
       - run:
