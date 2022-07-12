@@ -30,7 +30,7 @@ commands:
           name: Revert migrations
           when: on_fail
           command: |
-            SUCCESS=$(curl --insecure  https://kvdb.io/GTEpHpRzixPUfazFwYdWhC/migration_$\<< parameters.Workflow_ID >>)
+            SUCCESS=$(curl --insecure  https://kvdb.io/GTEpHpRzixPUfazFwYdWhC/migration_$\${CIRCLE_WORKFLOW_ID:0:7})
             if(( $SUCCESS==1 )); 
             then
               cd ~/project/backend
@@ -279,6 +279,8 @@ jobs:
       - checkout
       - add_ssh_keys:
           fingerprints: ["1b:80:7c:08:70:d7:13:3e:e5:eb:5b:db:b5:bb:d5:47"]
+      - attach_workspace:
+          at: ~/project
       - run:
           name: Install dependencies
           command: |
@@ -290,8 +292,7 @@ jobs:
             sudo apt-get install npm
             sudo apt-get install -y python3 python3-pip
             python3 -m pip install --user ansible
-      - attach_workspace:
-          at: ~/project
+      
 
       - run:
           name: Deploy backend
@@ -301,7 +302,7 @@ jobs:
             npm run build
             cd ..
             # Zip the directory
-            tar -C backend -czvf artifact.tar.gz 
+            tar -C backend -czvf artifact.tar.gz .
             mkdir ~/project/.circleci/ansible/roles/deploy/files
             cp artifact.tar.gz ~/project/.circleci/ansible/roles/deploy/files
             ls -a ~/project/.circleci/ansible/roles/deploy/files
