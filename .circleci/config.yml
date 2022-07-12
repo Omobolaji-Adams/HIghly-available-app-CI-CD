@@ -169,7 +169,7 @@ jobs:
             cat .circleci/ansible/inventory.txt
     
       - persist_to_workspace:
-          root: ~/project
+          root: .
           paths:
             - .circleci/ansible/*
 
@@ -182,16 +182,17 @@ jobs:
       - checkout
       - add_ssh_keys:
           fingerprints: ["8a:07:e0:da:c8:a0:e0:82:0c:63:86:a2:9f:6c:ab:01"]
+      - attach_workspace:
+          at: .
       - run:
           name: Install awscli tar gzip
           command: |
+            cat .circleci/ansible/inventory.txt
             curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
             unzip awscliv2.zip
             sudo ./aws/install
             sudo apt install -y tar gzip
             
-      - attach_workspace:
-          at: ~/project
       - run:
           name: Install dependencies
           command: |
@@ -202,10 +203,8 @@ jobs:
       - run:
           name: Configure server
           command: |
-            ansible all -m ping -vvv
-            
-            cat ~/project/.circleci/ansible/inventory.txt
-            cd ~/project/.circleci/ansible
+            cat .circleci/ansible/inventory.txt
+            cd .circleci/ansible
             ansible-playbook -i inventory.txt configure-server.yml
           
       - destroy-environment       
@@ -215,11 +214,20 @@ jobs:
       - image: circleci/node:13.8.0
     steps:
       - checkout
-      - restore_cache:
-          keys: [backend-build]
+      - attach_workspace:
+          at: ~/.circleci/ansible/inventory.txt
+      - run:
+          name: Install awscli tar gzip
+          command: |
+            cat .circleci/ansible/inventory.txt
+            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+            unzip awscliv2.zip
+            sudo ./aws/install
+            sudo apt install -y tar gzip    
       - run:
           name: Run migrations
           command: |
+            cat  ~/.circleci/ansible/inventory.txt
             cd backend
             npm install
             npm run migrations > migrations_dump.txt
@@ -239,6 +247,8 @@ jobs:
       - image:  cimg/base:stable
     steps:
       - checkout
+      - attach_workspace:
+          at: ~/.circleci/ansible/inventory.txt
       - run:
           name: Install dependencies
           command: |
@@ -250,8 +260,7 @@ jobs:
             sudo apt-get install npm
             sudo apt-get install -y python3 python3-pip
             python3 -m pip install --user ansible
-      - attach_workspace:
-          at: ~/project
+      
       - run:
           name: Get backend url
           command: |
@@ -280,10 +289,11 @@ jobs:
       - add_ssh_keys:
           fingerprints: ["8a:07:e0:da:c8:a0:e0:82:0c:63:86:a2:9f:6c:ab:01"]
       - attach_workspace:
-          at: ~/project
+          at: .
       - run:
           name: Install dependencies
           command: |
+            cat .circleci/ansible/inventory.txt
             apk add --update ansible curl rsync openssh nodejs npm
             ansible --version
             pip install awscli
@@ -311,6 +321,8 @@ jobs:
       - image: alpine:latest
     steps:
       - checkout
+      - attach_workspace:
+          at: ~/.circleci/ansible/inventory.txt
       - run:
           name: Install dependencies
           command: |
