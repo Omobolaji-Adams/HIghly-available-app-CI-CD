@@ -30,7 +30,7 @@ commands:
           name: Revert migrations
           when: on_fail
           command: |
-            SUCCESS=$(curl --insecure  https://kvdb.io/GTEpHpRzixPUfazFwYdWhC/migration_$\${CIRCLE_WORKFLOW_ID:0:7})
+            SUCCESS=$(curl --insecure  https://kvdb.io/GTEpHpRzixPUfazFwYdWhC/migration_$\${CIRCLE_WORKFLOW_ID:0:7} )
             if(( $SUCCESS==1 )); 
             then
               cd ~/project/backend
@@ -315,28 +315,35 @@ jobs:
       - destroy-environment 
         
 
-#   smoke-test:
-#     docker:
-#       # Lightweight Docker image 
-#     steps:
-#       # Checkout code from git
-#       - run:
-#           name: Install dependencies
-#           command: |
-#             # your code here
-#       - run:
-#           name: Get backend url
-#           command: |
-#             # your code here
-#       - run:
-#           name: Backend smoke test.
-#           command: |
-#             # your code here
-#       - run:
-#           name: Frontend smoke test.
-#           command: |
-#             # your code here
-#       # Here's where you will add some code to rollback on failure  
+  smoke-test:
+    docker:
+      - image: alpine:latest
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: |
+            apk add --update curl
+            apk add --update nodejs
+            apk add --update npm
+            apk add --update 
+            apk add --no-cache python3 py3-pip 
+            pip3 install --upgrade pip
+            pip3 install awscli 
+            rm -rf /var/cache/apk/*
+      - run:
+          name: Get backend url
+          command: |
+            # your code here
+      - run:
+          name: Backend smoke test.
+          command: |
+            # your code here
+      - run:
+          name: Frontend smoke test.
+          command: |
+            # your code here
+      # Here's where you will add some code to rollback on failure  
 
 #   cloudfront-update:
 #     docker:
