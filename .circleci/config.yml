@@ -3,25 +3,34 @@ commands:
   destroy-environment:
     description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
     parameters:
-      id:
-        type: string   
+      Workflow_ID:
+        type: string
+        default: ${CIRCLE_WORKFLOW_ID:0:7}
     steps:
       - run:
           name: Destroy environments
           when: on_fail
           command: |
-            aws cloudformation delete-stack --stack-name << parameters.id >>
+            # Empty frontend bucket
+            aws s3 rm s3://udapeople-<<parameters.Workflow_ID>> --recursive
+
+            # Delete frontend stack
+            aws cloudformation delete-stack --stack-name udapeople-frontend-<< parameters.Workflow_ID >>
+
+            # Delete backend stack
+            aws cloudformation delete-stack --stack-name udapeople-backend-<< parameters.Workflow_ID >>
   revert-migrations:
     description: Revert the last migration if successfully run in the current workflow.
-    # parameters:
-    #   id:
-    #     type: string   
+    parameters:
+      Workflow_ID:
+        type: string
+        default: ${CIRCLE_WORKFLOW_ID:0:7}  
     steps:
       - run:
           name: Revert migrations
           when: on_fail
           command: |
-            SUCCESS=$(curl --insecure  https://kvdb.io/GTEpHpRzixPUfazFwYdWhC/migration_$\{CIRCLE_WORKFLOW_ID:0:7\})
+            SUCCESS=$(curl --insecure  https://kvdb.io/GTEpHpRzixPUfazFwYdWhC/migration_$\<< parameters.Workflow_ID >>)
             if(( $SUCCESS==1 )); 
             then
               cd ~/project/backend
@@ -164,10 +173,7 @@ jobs:
           paths:
             - .circleci/ansible/inventory.txt
 
-      - destroy-environment:
-          id: 'udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}'
-      - destroy-environment:
-          id: udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}    
+      - destroy-environment  
 
   configure-infrastructure:
     docker:
@@ -202,12 +208,8 @@ jobs:
             cd ~/project/.circleci/ansible
             ansible-playbook -i inventory.txt configure-server.yml
           
-      - destroy-environment:
-          id: 'udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}'
-      - destroy-environment:
-          id: udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}         
+      - destroy-environment       
        
-
   run-migrations:
     docker:
       - image: circleci/node:13.8.0
@@ -230,8 +232,8 @@ jobs:
              curl https://kvdb.io/GTEpHpRzixPUfazFwYdWhC/migration_${CIRCLE_WORKFLOW_ID:0:7}  -d '1'
             fi
       - revert-migrations
-    
-     
+      - destroy-environment 
+       
   deploy-frontend:
     docker:
       - image:  cimg/base:stable
@@ -268,23 +270,49 @@ jobs:
             tar -czvf artifact-"${CIRCLE_WORKFLOW_ID:0:7}".tar.gz dist
             aws s3 cp dist s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --recursive
 
-      - revert-migrations              
-#   deploy-backend:
-#     docker:
-#       # Docker image here that supports Ansible
-#     steps:
-#       # Checkout code from git
-#       # Add ssh keys with fingerprint
-#       # attach workspace
-#       - run:
-#           name: Install dependencies
-#           command: |
-#             # your code here
-#       - run:
-#           name: Deploy backend
-#           command: |
-#             # your code here
-#       # Here's where you will add some code to rollback on failure  
+      - revert-migrations 
+      - destroy-environment              
+  deploy-backend:
+    docker:
+      - image:  cimg/base:stable
+    steps:
+      - checkout
+       - add_ssh_keys:
+          fingerprints: ["1b:80:7c:08:70:d7:13:3e:e5:eb:5b:db:b5:bb:d5:47"]
+      - run:
+          name: Install dependencies
+          command: |
+            sudo apt update
+            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+            unzip awscliv2.zip
+            sudo ./aws/install
+            sudo apt-get install nodejs
+            sudo apt-get install npm
+            sudo apt-get install -y python3 python3-pip
+            python3 -m pip install --user ansible
+      - attach_workspace:
+          at: ~/project
+
+      - run:
+          name: Deploy backend
+          command: |
+            cd backend
+            npm i
+            npm run build
+            cd ..
+            # Zip the directory
+            tar -C backend -czvf artifact.tar.gz 
+            mkdir ~/project/.circleci/ansible/roles/deploy/files
+            cp artifact.tar.gz ~/project/.circleci/ansible/roles/deploy/files
+            ls -a ~/project/.circleci/ansible/roles/deploy/files
+            cd .circleci/ansible
+            echo "Contents  of the inventory.txt file is -------"
+            cat inventory.txt
+            ansible-playbook -i inventory.txt deploy-backend.yml
+            
+      - revert-migrations 
+      - destroy-environment 
+        
 
 #   smoke-test:
 #     docker:
