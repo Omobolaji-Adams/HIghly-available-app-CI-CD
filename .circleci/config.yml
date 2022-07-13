@@ -215,7 +215,7 @@ jobs:
     steps:
       - checkout
       - attach_workspace:
-          at: .circleci/ansible/inventory.txt
+          at: ~/.circleci/ansible/inventory.txt
       - run: 
           name: View content of inventory.txt
           command: cat .circleci/ansible/inventory.txt
@@ -251,7 +251,7 @@ jobs:
     steps:
       - checkout
       - attach_workspace:
-          at: .
+          at: ~/.circleci/ansible/inventory.txt
       - run:
           name: Install dependencies
           command: |
