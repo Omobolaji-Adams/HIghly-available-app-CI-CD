@@ -171,6 +171,11 @@ jobs:
             cat .circleci/ansible/inventory.txt
             ls -a .circleci
             ls -a .circleci/ansible
+            cd ..
+            pwd
+            cd ..
+            pwd
+
 
     
       - persist_to_workspace:
