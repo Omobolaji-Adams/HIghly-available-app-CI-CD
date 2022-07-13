@@ -166,7 +166,9 @@ jobs:
             --query 'Reservations[*].Instances[*].PublicIpAddress' \
             --filters "Name=tag:project,Values=udapeople" \
             --output text >> .circleci/ansible/inventory.txt
+            pwd
             cat .circleci/ansible/inventory.txt
+
     
       - persist_to_workspace:
           root: .
@@ -230,7 +232,6 @@ jobs:
       - run:
           name: Run migrations
           command: |
-            cat  ~/.circleci/ansible/inventory.txt
             cd backend
             npm install
             npm run migrations > migrations_dump.txt
