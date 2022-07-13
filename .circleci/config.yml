@@ -167,13 +167,16 @@ jobs:
             --filters "Name=tag:project,Values=udapeople" \
             --output text >> .circleci/ansible/inventory.txt
             pwd
+            ls -a
             cat .circleci/ansible/inventory.txt
+            ls -a .circleci
+            ls -a .circleci/ansible
 
     
       - persist_to_workspace:
-          root: .
+          root: .circleci/ansible
           paths:
-            - .circleci/ansible/*
+            - inventory.txt
 
       - destroy-environment  
 
@@ -185,7 +188,7 @@ jobs:
       - add_ssh_keys:
           fingerprints: ["8a:07:e0:da:c8:a0:e0:82:0c:63:86:a2:9f:6c:ab:01"]
       - attach_workspace:
-          at: .
+          at: /root/project/.circleci/ansible
       - run:
           name: Install awscli tar gzip
           command: |
@@ -217,7 +220,7 @@ jobs:
     steps:
       - checkout
       - attach_workspace:
-          at: ~/.circleci/ansible/inventory.txt
+          at: /root/project/.circleci/ansible
       - run: 
           name: View content of inventory.txt
           command: cat .circleci/ansible/inventory.txt
@@ -252,7 +255,7 @@ jobs:
     steps:
       - checkout
       - attach_workspace:
-          at: ~/.circleci/ansible/inventory.txt
+          at: /root/project/.circleci/ansible
       - run:
           name: Install dependencies
           command: |
@@ -293,7 +296,7 @@ jobs:
       - add_ssh_keys:
           fingerprints: ["8a:07:e0:da:c8:a0:e0:82:0c:63:86:a2:9f:6c:ab:01"]
       - attach_workspace:
-          at: .
+          at: /root/project/.circleci/ansible
       - run:
           name: Install dependencies
           command: |
@@ -326,7 +329,7 @@ jobs:
     steps:
       - checkout
       - attach_workspace:
-          at: ~/.circleci/ansible/inventory.txt
+          at: /root/project/.circleci/ansible
       - run:
           name: Install dependencies
           command: |
