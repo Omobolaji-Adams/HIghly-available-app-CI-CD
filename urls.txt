@@ -12,10 +12,5 @@ The Backend Endpoint [URL04]
 http://54.156.220.50:3030/api/status
 
 Prometheus Server. [URL05]
-http://44.208.253.144:9090/targets?search=
-
-
-
-db endpoint (hostname)
-udapeople-prod.cxw3amim9m9h.us-east-1.rds.amazonaws.com
+http://44.208.253.144:9090/targets
 
