@@ -1,0 +1,21 @@
+
+Git Repository [URL01]
+https://github.com/Omobolaji-Adams/HIghly-available-app-CI-CD.git
+
+S3 Bucket (aka, your front-end). [URL02]
+http://udapeople-4031a42.s3-website-us-east-1.amazonaws.com
+
+CloudFront (aka, your production front-end). [URL03]
+d1nbsrlejpc693.cloudfront.net
+
+The Backend Endpoint [URL04]
+http://54.156.220.50:3030/api/status
+
+Prometheus Server. [URL05]
+http://44.208.253.144:9090/targets?search=
+
+
+
+db endpoint (hostname)
+udapeople-prod.cxw3amim9m9h.us-east-1.rds.amazonaws.com
+
