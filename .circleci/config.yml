@@ -78,8 +78,6 @@ jobs:
       - image: circleci/node:13.8.0
     steps:
       - checkout
-      - restore_cache:
-          keys: [frontend-build]
       - run:
           name: test front-end
           command: |
@@ -92,8 +90,6 @@ jobs:
       - image: circleci/node:13.8.0
     steps:
       - checkout
-      - restore_cache:
-          keys: [backend-build]
       - run:
           name: test Back-end
           command: |
@@ -106,8 +102,6 @@ jobs:
       - image: circleci/node:13.8.0
     steps:
       - checkout
-      - restore_cache:
-          keys: [frontend-build]
       - run:
           name: scan front-end
           command: |
@@ -121,16 +115,13 @@ jobs:
       - image: circleci/node:13.8.0
     steps:
       - checkout
-      - restore_cache:
-          keys: [backend-build]
       - run:
           name: scan Back-end
           command: |
             cd backend
             npm install
             npm audit fix --force --audit-level=critical
-            npm audit fix --force --audit-level=critical
-            npm audit --audit-level=critical
+
   
   deploy-infrastructure:
     docker:
@@ -167,15 +158,7 @@ jobs:
             --query 'Reservations[*].Instances[*].PublicIpAddress' \
             --filters "Name=tag:project,Values=udapeople" \
             --output text >> .circleci/ansible/inventory.txt
-            pwd
-            ls -a
-            cat .circleci/ansible/inventory.txt
-            ls -a .circleci
-            ls -a .circleci/ansible
-            cd ..
-            pwd
-            cd ..
-            pwd
+            
 
 
     
@@ -188,7 +171,7 @@ jobs:
 
   configure-infrastructure:
     docker:
-      - image:  cimg/base:stable
+      - image:  python:3.7-alpine3.11
     steps:
       - checkout
       - add_ssh_keys:
@@ -199,17 +182,10 @@ jobs:
           name: Install awscli tar gzip
           command: |
             cat .circleci/ansible/inventory.txt
-            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-            unzip awscliv2.zip
-            sudo ./aws/install
-            sudo apt install -y tar gzip
-            
-      - run:
-          name: Install dependencies
-          command: |
-            sudo apt update
-            sudo apt install -y python3 python3-pip
-            python3 -m pip install --user ansible
+            apk add --update ansible
+            pip install awscli
+            aws --version
+          
                 
       - run:
           name: Configure server
@@ -234,10 +210,10 @@ jobs:
       - run:
           name: Install awscli tar gzip
           command: |
+            sudo apt-get update && sudo apt-get install -yy less
             curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
             unzip awscliv2.zip
-            sudo ./aws/install
-            sudo apt install -y tar gzip    
+            sudo ./aws/install    
             
       - run:
           name: Run migrations
@@ -251,6 +227,7 @@ jobs:
           command: |   
             if grep -q "has been executed successfully." ~/project/backend/migrations_dump.txt
             then
+             sudo apt-get update && sudo apt-get install -y ca-certificates
              curl https://kvdb.io/GTEpHpRzixPUfazFwYdWhC/migration_${CIRCLE_WORKFLOW_ID:0:7}  -d '1'
             fi
       
@@ -258,7 +235,7 @@ jobs:
        
   deploy-frontend:
     docker:
-      - image:  cimg/base:stable
+      - image:  circleci/node:13.8.0
     steps:
       - checkout
       - attach_workspace:
@@ -266,14 +243,10 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            sudo apt update
+            sudo apt-get update && sudo apt-get install -yy less
             curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
             unzip awscliv2.zip
             sudo ./aws/install
-            sudo apt-get install nodejs
-            sudo apt-get install npm
-            sudo apt-get install -y python3 python3-pip
-            python3 -m pip install --user ansible
       
       - run:
           name: Get backend url
@@ -332,7 +305,7 @@ jobs:
         
   smoke-test:
     docker:
-      - image: alpine:latest
+      - image: python:3.7-alpine3.11
     steps:
       - checkout
       - attach_workspace:
@@ -340,15 +313,8 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            apk add --update curl
-            apk add --update nodejs
-            apk add --update npm
-            apk add --update 
-            apk add --no-cache python3 py3-pip 
-            pip3 install --upgrade pip
-            pip3 install awscli 
-            rm -rf /var/cache/apk/*
-
+            apk add --update curl nodejs npm
+            pip install awscli
 
       - run:
           name: Backend smoke test.
