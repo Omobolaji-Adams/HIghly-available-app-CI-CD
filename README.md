@@ -10,7 +10,7 @@ In this project, I covered the following:
 
 ![Diagram of CI/CD Pipeline we will be building.](udapeople.png)
 
-### Project Tasks
+### Project Creation Tasks
 
 * [Selling CI/CD](instructions/0-selling-cicd.md)
 * [Getting Started](instructions/1-getting-started.md)
