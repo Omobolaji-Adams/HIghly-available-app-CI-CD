@@ -1,4 +1,4 @@
-[![CircleCI](https://circleci.com/gh/Omobolaji-Adams/HIghly-available-app-CI-CD/tree/master.svg?style=svg)](https://circleci.com/gh/Omobolaji-Adams/HIghly-available-app-CI-CD/?branch=dev-branch)
+[![CircleCI](https://circleci.com/gh/Omobolaji-Adams/HIghly-available-app-CI-CD/tree/dev-branch.svg?style=svg)](https://circleci.com/gh/Omobolaji-Adams/HIghly-available-app-CI-CD/?branch=dev-branch)
 ## Give your Application Auto-Deploy Superpowers
 
 In this project, I covered the following:
