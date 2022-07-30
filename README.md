@@ -1,5 +1,6 @@
 [![CircleCI](https://circleci.com/gh/Omobolaji-Adams/HIghly-available-app-CI-CD/tree/dev-branch.svg?style=svg)](https://circleci.com/gh/Omobolaji-Adams/HIghly-available-app-CI-CD/?branch=dev-branch)
-## Give your Application Auto-Deploy Superpowers
+## Giving Web Application Auto-Deploy Superpowers
+UdaPeople product, a revolutionary concept in Human Resources which promises to help small businesses care better for their most valuable resource: their people.
 
 In this project, I covered the following:
 
